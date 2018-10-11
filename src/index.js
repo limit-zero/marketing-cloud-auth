@@ -2,6 +2,8 @@ const fetch = require('node-fetch');
 
 class MarketingCloudAuth {
   /**
+   * @see https://developer.salesforce.com/docs/atlas.en-us.mc-getting-started.meta/mc-getting-started/get-access-token.htm
+   *
    * @param {object} options
    * @param {string} options.clientId The Marketing Cloud API ID
    * @param {string} options.clientSecret The Marketing Cloud API Scecret
