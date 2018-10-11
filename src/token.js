@@ -2,11 +2,11 @@ class AuthToken {
   /**
    *
    * @param {object} params
-   * @param {string} params.token The access token value.
+   * @param {string} params.value The access token value.
    * @param {number} params.expiresIn The number of seconds until the token expires.
    */
-  constructor({ token, expiresIn } = {}) {
-    this.token = token;
+  constructor({ value, expiresIn } = {}) {
+    this.value = value;
     this.expiresIn = expiresIn;
   }
 
@@ -17,7 +17,7 @@ class AuthToken {
    */
   isValid() {
     if (this.hasExpired()) return false;
-    if (this.token) return true;
+    if (this.value) return true;
     return false;
   }
 
@@ -27,7 +27,7 @@ class AuthToken {
    * @returns {boolean}
    */
   hasExpired() {
-    if (!this.token) return false;
+    if (!this.value) return false;
     if (this.expiresIn && this.expiresIn <= process.hrtime()[0]) return true;
     return false;
   }
@@ -38,8 +38,8 @@ class AuthToken {
    * @returns {string}
    */
   toString() {
-    if (!this.token) return '';
-    return this.token;
+    if (!this.value) return '';
+    return this.value;
   }
 }
 

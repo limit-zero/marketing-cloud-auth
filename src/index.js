@@ -41,7 +41,7 @@ class MarketingCloudAuth {
     }
     try {
       const { accessToken, expiresIn } = await this.fetchPromise;
-      this.token = new AuthToken({ token: accessToken, expiresIn });
+      this.token = new AuthToken({ value: accessToken, expiresIn });
       return this.token;
     } catch (e) {
       this.fetchPromise = undefined;
