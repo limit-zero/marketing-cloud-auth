@@ -18,7 +18,7 @@ npm install marketing-cloud-auth
 ```
 
 ## Usage
-To retrieve an access token, require the class and provide your API client ID and seceret.
+To retrieve an access token, require the class and provide your API client ID and secret.
 ```js
 // your-file.js
 const MarketingCloudAuth = require('marketing-cloud-auth');
