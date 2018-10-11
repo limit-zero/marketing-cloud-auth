@@ -9,7 +9,15 @@
     "type": "git",
     "url": "https://github.com/limit-zero/marketing-cloud-auth.git"
   },
+  "scripts": {
+    "lint": "./node_modules/.bin/eslint src"
+  },
   "engines": {
     "node": ">=7"
+  },
+  "devDependencies": {
+    "eslint": "^5.6.1",
+    "eslint-config-airbnb-base": "^13.1.0",
+    "eslint-plugin-import": "^2.14.0"
   }
 }
