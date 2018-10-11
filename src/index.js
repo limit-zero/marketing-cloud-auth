@@ -40,8 +40,8 @@ class MarketingCloudAuth {
       this.fetchPromise = this.fetch(fetchOptions);
     }
     try {
-      const { accessToken, expiresIn } = await this.fetchPromise;
-      this.token = new AuthToken({ value: accessToken, expiresIn });
+      const { accessToken, expiresIn, retrievedAt } = await this.fetchPromise;
+      this.token = new AuthToken({ value: accessToken, expiresIn, retrievedAt });
       return this.token;
     } catch (e) {
       this.fetchPromise = undefined;
@@ -58,6 +58,8 @@ class MarketingCloudAuth {
    */
   async fetch(options = {}) {
     const { clientId, clientSecret } = this;
+    // Set the retrievedAt before the request so the expiration will be slightly padded.
+    const retrievedAt = new Date();
     const res = await fetch(this.authUrl, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
@@ -77,7 +79,7 @@ class MarketingCloudAuth {
       e.code = errorcode;
       throw e;
     }
-    return { accessToken, expiresIn };
+    return { accessToken, expiresIn, retrievedAt };
   }
 }
 
