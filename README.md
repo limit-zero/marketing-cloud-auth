@@ -5,7 +5,8 @@ Authenticates and retrieves an access token for the Salesforce Marketing Cloud A
 ## Features
 - Simple
 - Lightweight
-- Modern: utilizes ES6, Promises via `async/await`, and `node-fetch`
+- Modern: utilizes ES6, Promises via `async/await`, Object rest spread, and `node-fetch`
+  - As such, _Node 8.6 or higher_ is required.
 
 ## Install
 Install with [Yarn](https://yarnpkg.com)

@@ -16,7 +16,7 @@
     "lint": "./node_modules/.bin/eslint src"
   },
   "engines": {
-    "node": ">=7"
+    "node": ">=8.6"
   },
   "devDependencies": {
     "eslint": "^5.6.1",
