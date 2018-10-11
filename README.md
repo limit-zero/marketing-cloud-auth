@@ -29,6 +29,8 @@ const auth = new MarketingCloudAuth({
 const retrieve = async () => {
   const token = await auth.retrieve();
   console.log(token);
+  // Will output somthing similar to
+  // { value: 'your-token', expiresIn: 3479 }
 }
 retrieve();
 
