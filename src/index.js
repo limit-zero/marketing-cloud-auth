@@ -27,11 +27,13 @@ class MarketingCloudAuth {
    * Will only make a request if the token is falsy, expired, or the method
    * forces the request.
    *
+   * @param {object} options
    * @param {boolean} options.force Whether to force a new auth token request.
+   * @param {?object} options.fetchOptions Additional options to send to `fetch`.
    */
-  async retrieve({ force = false } = {}) {
+  async retrieve({ force = false, fetchOptions } = {}) {
     if (!this.token || this.hasExpired() || force) {
-      this.token = await this.request();
+      this.token = await this.request(fetchOptions);
     }
     return this.token;
   }
@@ -58,14 +60,16 @@ class MarketingCloudAuth {
    * Executes an authentication request to Marketing Cloud.
    *
    * @private
+   * @param {object} options Additional options to send to `fetch`.
    * @returns {Promise<string>} The Marketing Cloud access token.
    */
-  async request() {
+  async request(options = {}) {
     const { clientId, clientSecret } = this;
     const res = await fetch(this.authUrl, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ clientId, clientSecret }),
+      ...options,
     });
 
     const {
