@@ -1,4 +1,5 @@
 const fetch = require('node-fetch');
+const AuthToken = require('./token');
 
 class MarketingCloudAuth {
   /**
@@ -32,38 +33,30 @@ class MarketingCloudAuth {
    * @param {?object} options.fetchOptions Additional options to send to `fetch`.
    */
   async retrieve({ force = false, fetchOptions } = {}) {
-    if (!this.token || this.hasExpired() || force) {
-      this.token = await this.request(fetchOptions);
+    if ((this.token && this.token.hasExpired()) || force) {
+      this.fetchPromise = this.fetch(fetchOptions);
     }
-    return this.token;
+    if (!this.fetchPromise) {
+      this.fetchPromise = this.fetch(fetchOptions);
+    }
+    try {
+      const { accessToken, expiresIn } = await this.fetchPromise;
+      this.token = new AuthToken({ token: accessToken, expiresIn });
+      return this.token;
+    } catch (e) {
+      this.fetchPromise = undefined;
+      throw e;
+    }
   }
 
   /**
-   * Invalidates the token.
-   */
-  invalidate() {
-    this.token = undefined;
-    return this;
-  }
-
-  /**
-   * Determines if the authentication token has expired.
-   * Considers a falsy token as expired.
-   */
-  hasExpired() {
-    if (!this.token) return true;
-    if (this.expiresIn && this.expiresIn <= process.hrtime()[0]) return true;
-    return false;
-  }
-
-  /**
-   * Executes an authentication request to Marketing Cloud.
+   * Executes an authentication fetch request to Marketing Cloud.
    *
    * @private
    * @param {object} options Additional options to send to `fetch`.
    * @returns {Promise<string>} The Marketing Cloud access token.
    */
-  async request(options = {}) {
+  async fetch(options = {}) {
     const { clientId, clientSecret } = this;
     const res = await fetch(this.authUrl, {
       method: 'POST',
@@ -84,10 +77,7 @@ class MarketingCloudAuth {
       e.code = errorcode;
       throw e;
     }
-    if (expiresIn) {
-      this.expiresIn = process.hrtime()[0] + expiresIn;
-    }
-    return accessToken;
+    return { accessToken, expiresIn };
   }
 }
 
