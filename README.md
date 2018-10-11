@@ -1,1 +1,1 @@
-# Salesforce Marketing Cloud (Fuel) Auth Service
+# Salesforce Marketing Cloud (Fuel) Authentication
