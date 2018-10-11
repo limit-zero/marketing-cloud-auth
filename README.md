@@ -12,10 +12,6 @@ Install with [Yarn](https://yarnpkg.com)
 ```
 yarn add marketing-cloud-auth
 ```
-Or [NPM](https://npmjs.com)
-```
-npm install marketing-cloud-auth
-```
 
 ## Usage
 To retrieve an access token, require the class and provide your API client ID and secret.
